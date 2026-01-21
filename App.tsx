@@ -325,15 +325,6 @@ const App: React.FC = () => {
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
               <CompanyImporter onImport={handleImportCompanies} />
             </div>
-            <div className="p-6 bg-red-50 rounded-3xl border border-red-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <h4 className="font-bold text-red-900">Cloud Data Reset</h4>
-                <p className="text-sm text-red-700">Warning: This clears the entire Firebase database.</p>
-              </div>
-              <button onClick={clearAllData} className="w-full sm:w-auto bg-red-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg hover:bg-red-700 transition-colors">
-                Clear Cloud Data
-              </button>
-            </div>
           </div>
         )}
       </main>
