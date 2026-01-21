@@ -115,7 +115,7 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
         <input type="file" accept="image/*" className="hidden" ref={fileRef} onChange={handleImageUpload} />
       </div>
 
-      <div className="p-8 md:p-12">
+      <div className="p-5 md:p-8">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10">
           <div className="flex-1">
             <div className="inline-flex items-center px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold uppercase tracking-wider mb-3">
@@ -125,16 +125,16 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
               <div className="space-y-4">
                 <input
                   type="text"
-                  className="text-4xl font-black text-gray-900 leading-tight w-full bg-gray-50 border-b-2 border-emerald-500 focus:outline-none"
+                  className="text-2xl font-black text-gray-900 leading-tight w-full bg-gray-50 border-b-2 border-emerald-500 focus:outline-none"
                   value={editedCompany.name}
                   onChange={(e) => setEditedCompany({ ...editedCompany, name: e.target.value })}
                   placeholder="Company Name"
                 />
                 <div className="flex items-center text-gray-500 font-medium">
-                  <MapPin className="w-5 h-5 mr-2 text-emerald-500" />
+                  <MapPin className="w-4 h-4 mr-2 text-emerald-500" />
                   <input
                     type="text"
-                    className="w-full bg-transparent border-b border-gray-300 focus:border-emerald-500 focus:outline-none"
+                    className="w-full bg-transparent border-b border-gray-300 focus:border-emerald-500 focus:outline-none text-sm"
                     value={editedCompany.address}
                     onChange={(e) => setEditedCompany({ ...editedCompany, address: e.target.value })}
                     placeholder="Address"
@@ -143,9 +143,9 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
               </div>
             ) : (
               <>
-                <h2 className="text-4xl font-black text-gray-900 leading-tight mb-2">{company.name}</h2>
-                <div className="flex items-center text-gray-500 font-medium">
-                  <MapPin className="w-5 h-5 mr-2 text-emerald-600" />
+                <h2 className="text-2xl font-black text-gray-900 leading-tight mb-1">{company.name}</h2>
+                <div className="flex items-center text-gray-500 font-medium text-sm">
+                  <MapPin className="w-4 h-4 mr-2 text-emerald-600" />
                   {company.address}
                 </div>
               </>
@@ -238,9 +238,9 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
                     <a
                       key={idx}
                       href={`tel:${number.replace(/[^\d+]/g, '')}`}
-                      className="bg-white text-emerald-800 px-5 py-4 rounded-xl font-bold shadow-sm hover:shadow-md hover:bg-emerald-50 hover:scale-[1.02] transition-all flex items-center justify-between group border border-emerald-100"
+                      className="bg-white text-emerald-800 px-4 py-3 rounded-xl font-bold shadow-sm hover:shadow-md hover:bg-emerald-50 hover:scale-[1.02] transition-all flex items-center justify-between group border border-emerald-100"
                     >
-                      <span className="text-lg">{number}</span>
+                      <span className="text-base">{number}</span>
                       <div className="bg-emerald-100 p-2 rounded-full text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                         <Phone className="w-4 h-4 fill-current" />
                       </div>
@@ -267,7 +267,7 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
               placeholder="Enter special instructions here..."
             />
           ) : (
-            <div className="text-gray-800 leading-relaxed text-lg whitespace-pre-wrap font-medium">
+            <div className="text-gray-800 leading-relaxed text-base whitespace-pre-wrap font-medium">
               {company.deliveryDetails || "Standard delivery procedures apply. No special instructions recorded."}
             </div>
           )}
