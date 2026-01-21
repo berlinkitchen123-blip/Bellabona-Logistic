@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Building2, 
-  BookOpen, 
-  LayoutDashboard, 
-  Truck, 
-  Search, 
+import {
+  Building2,
+  BookOpen,
+  LayoutDashboard,
+  Truck,
+  Search,
   Info,
   MapPin,
   ClipboardCheck,
@@ -17,7 +17,7 @@ import {
   Camera,
   Trash2,
   Loader2,
-      Cloud as CloudCheck,
+  Cloud as CloudCheck,
   CloudOff
 } from 'lucide-react';
 import { ref, onValue, set } from "firebase/database";
@@ -38,6 +38,7 @@ const App: React.FC = () => {
   const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [initialEditMode, setInitialEditMode] = useState(false);
 
   // Real-time synchronization with Firebase
   useEffect(() => {
@@ -97,10 +98,15 @@ const App: React.FC = () => {
   };
 
   const handleUpdateStepImage = (stepId: number, base64Image: string) => {
-    const updated = sopSteps.map(step => 
+    const updated = sopSteps.map(step =>
       step.id === stepId ? { ...step, image: base64Image } : step
     );
     syncData('sopSteps', updated);
+  };
+
+  const handleSelectCompany = (id: string, edit: boolean = false) => {
+    setSelectedCompanyId(id);
+    setInitialEditMode(edit);
   };
 
   const clearAllData = () => {
@@ -111,8 +117,8 @@ const App: React.FC = () => {
     }
   };
 
-  const filteredCompanies = companies.filter(c => 
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  const filteredCompanies = companies.filter(c =>
+    c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     c.address.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -121,11 +127,10 @@ const App: React.FC = () => {
   const NavItem: React.FC<{ view: AppView; icon: React.ReactNode; label: string }> = ({ view, icon, label }) => (
     <button
       onClick={() => { setActiveView(view); setSelectedCompanyId(null); }}
-      className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all ${
-        activeView === view 
-          ? 'bg-blue-600 text-white shadow-lg' 
+      className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all ${activeView === view
+          ? 'bg-blue-600 text-white shadow-lg'
           : 'text-gray-600 hover:bg-gray-100'
-      }`}
+        }`}
     >
       {icon}
       <span className="font-medium">{label}</span>
@@ -151,7 +156,7 @@ const App: React.FC = () => {
             </div>
             <h1 className="text-xl font-black text-gray-900 tracking-tight hidden sm:block">LogiTrain</h1>
           </div>
-          
+
           <nav className="hidden md:flex items-center space-x-1">
             <NavItem view="dashboard" icon={<Search className="w-4 h-4" />} label="Lookup" />
             <NavItem view="companies" icon={<Building2 className="w-4 h-4" />} label="Database" />
@@ -160,25 +165,25 @@ const App: React.FC = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
-             <div className="hidden sm:flex items-center">
-                {isSyncing ? (
-                   <div className="flex items-center text-amber-500 text-[10px] font-bold uppercase tracking-widest">
-                     <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                     Syncing
-                   </div>
-                ) : (
-                   <div className="flex items-center text-green-500 text-[10px] font-bold uppercase tracking-widest">
-                     <CloudCheck className="w-3 h-3 mr-1" />
-                     Cloud Connected
-                   </div>
-                )}
-             </div>
-             <button 
-                onClick={() => { setActiveView('settings'); setSelectedCompanyId(null); }}
-                className={`p-2 rounded-full transition-colors ${activeView === 'settings' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-              >
-                <SettingsIcon className="w-5 h-5" />
-              </button>
+            <div className="hidden sm:flex items-center">
+              {isSyncing ? (
+                <div className="flex items-center text-amber-500 text-[10px] font-bold uppercase tracking-widest">
+                  <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                  Syncing
+                </div>
+              ) : (
+                <div className="flex items-center text-green-500 text-[10px] font-bold uppercase tracking-widest">
+                  <CloudCheck className="w-3 h-3 mr-1" />
+                  Cloud Connected
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => { setActiveView('settings'); setSelectedCompanyId(null); }}
+              className={`p-2 rounded-full transition-colors ${activeView === 'settings' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            >
+              <SettingsIcon className="w-5 h-5" />
+            </button>
           </div>
         </div>
       </header>
@@ -193,9 +198,9 @@ const App: React.FC = () => {
 
             <div className="relative group mb-8">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
-              <input 
-                type="text" 
-                placeholder="Type company name..." 
+              <input
+                type="text"
+                placeholder="Type company name..."
                 className="w-full pl-14 pr-4 py-5 bg-white border-2 border-gray-100 rounded-3xl text-xl shadow-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -205,43 +210,59 @@ const App: React.FC = () => {
 
             <div className="space-y-3">
               {searchQuery && filteredCompanies.length > 0 ? (
-                filteredCompanies.slice(0, 8).map(company => (
-                  <button
-                    key={company.id}
-                    onClick={() => setSelectedCompanyId(company.id)}
-                    className="w-full bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-blue-300 hover:shadow-md transition-all group active:scale-[0.98]"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="bg-blue-50 p-3 rounded-xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <Building2 className="w-6 h-6" />
-                      </div>
-                      <div className="text-left">
-                        <h4 className="font-bold text-gray-900">{company.name}</h4>
-                        <div className="flex items-center text-xs text-gray-500 mt-1">
-                          <MapPin className="w-3 h-3 mr-1" />
-                          {company.address}
+                filteredCompanies.slice(0, 8).map(company => {
+                  const hasData = company.deliveryDetails || company.images?.length;
+                  return (
+                    <div
+                      key={company.id}
+                      className="w-full bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-blue-300 hover:shadow-md transition-all group"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className="bg-blue-50 p-3 rounded-xl text-blue-600">
+                          <Building2 className="w-6 h-6" />
+                        </div>
+                        <div className="text-left">
+                          <h4 className="font-bold text-gray-900">{company.name}</h4>
+                          <div className="flex items-center text-xs text-gray-500 mt-1">
+                            <MapPin className="w-3 h-3 mr-1" />
+                            {company.address}
+                          </div>
                         </div>
                       </div>
+
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => handleSelectCompany(company.id, false)}
+                          className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${hasData ? 'bg-blue-600 text-white shadow-lg hover:bg-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                        >
+                          View
+                        </button>
+                        <button
+                          onClick={() => handleSelectCompany(company.id, true)}
+                          className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${!hasData ? 'bg-amber-500 text-white shadow-lg hover:bg-amber-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                        >
+                          Edit
+                        </button>
+                      </div>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-gray-300 group-hover:text-blue-600 transition-colors" />
-                  </button>
-                ))
+                  );
+                })
               ) : searchQuery ? (
                 <div className="text-center py-10">
-                   <p className="text-gray-400 font-medium">No company found with that name.</p>
+                  <p className="text-gray-400 font-medium">No company found with that name.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-4">
-                   <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                      <span className="text-blue-700 font-black text-xs uppercase tracking-widest block mb-2">Instructions</span>
-                      <p className="text-sm text-blue-800 font-medium">Search for your next delivery stop to view site specific info.</p>
-                   </div>
-                   <div className="p-6 bg-gray-50 rounded-2xl border border-gray-200">
-                      <span className="text-gray-700 font-black text-xs uppercase tracking-widest block mb-2">Quick Access</span>
-                      <button onClick={() => setActiveView('driver-view')} className="text-sm text-gray-800 font-bold flex items-center hover:text-blue-600 transition-colors">
-                        View SOP Steps <ChevronRight className="w-4 h-4 ml-1" />
-                      </button>
-                   </div>
+                  <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                    <span className="text-blue-700 font-black text-xs uppercase tracking-widest block mb-2">Instructions</span>
+                    <p className="text-sm text-blue-800 font-medium">Search for your next delivery stop to view site specific info.</p>
+                  </div>
+                  <div className="p-6 bg-gray-50 rounded-2xl border border-gray-200">
+                    <span className="text-gray-700 font-black text-xs uppercase tracking-widest block mb-2">Quick Access</span>
+                    <button onClick={() => setActiveView('driver-view')} className="text-sm text-gray-800 font-bold flex items-center hover:text-blue-600 transition-colors">
+                      View SOP Steps <ChevronRight className="w-4 h-4 ml-1" />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -250,17 +271,18 @@ const App: React.FC = () => {
 
         {selectedCompanyId && selectedCompany && activeView === 'dashboard' && (
           <div className="max-w-3xl mx-auto animate-in">
-             <button 
-                onClick={() => setSelectedCompanyId(null)}
-                className="mb-6 flex items-center text-gray-500 hover:text-gray-900 font-bold"
-             >
-                <X className="w-5 h-5 mr-2" />
-                Back to Search
-             </button>
-             <CompanyDetails 
-                company={selectedCompany} 
-                onUpdate={handleUpdateCompany}
-             />
+            <button
+              onClick={() => setSelectedCompanyId(null)}
+              className="mb-6 flex items-center text-gray-500 hover:text-gray-900 font-bold"
+            >
+              <X className="w-5 h-5 mr-2" />
+              Back to Search
+            </button>
+            <CompanyDetails
+              company={selectedCompany}
+              onUpdate={handleUpdateCompany}
+              initialEditMode={initialEditMode}
+            />
           </div>
         )}
 
@@ -270,9 +292,9 @@ const App: React.FC = () => {
               <h2 className="text-2xl font-black">Company Registry</h2>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input 
-                  type="text" 
-                  placeholder="Filter database..." 
+                <input
+                  type="text"
+                  placeholder="Filter database..."
                   className="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -285,12 +307,12 @@ const App: React.FC = () => {
 
         {activeView === 'training' && (
           <div className="space-y-6 animate-in">
-             <h2 className="text-2xl font-black">SOP Visual Setup</h2>
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-               {sopSteps.map(step => (
-                 <SOPStepEditor key={step.id} step={step} onImageUpdate={(img) => handleUpdateStepImage(step.id, img)} />
-               ))}
-             </div>
+            <h2 className="text-2xl font-black">SOP Visual Setup</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sopSteps.map(step => (
+                <SOPStepEditor key={step.id} step={step} onImageUpdate={(img) => handleUpdateStepImage(step.id, img)} />
+              ))}
+            </div>
           </div>
         )}
 
