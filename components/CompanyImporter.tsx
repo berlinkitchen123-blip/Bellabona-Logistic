@@ -13,26 +13,54 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const extractContactInfo = (deliveryInfo: string) => {
+    const lines = deliveryInfo.split('\n').map(l => l.trim()).filter(l => l);
+    // Usually contact is the first line after the description, often looks like a name
+    // We'll look for a line that doesn't look like a phone number but might be a name
+    const phoneRegex = /\+?[\d\s\-()–]{7,}/g;
+    const phoneNumbers = deliveryInfo.match(phoneRegex) || [];
+
+    // Simple heuristic for name: first line that doesn't have many numbers
+    const contactPerson = lines.find(line => {
+      const digitCount = (line.match(/\d/g) || []).length;
+      return digitCount < 5 && line.length > 3;
+    }) || '';
+
+    return {
+      contactPerson,
+      phoneNumber: phoneNumbers.join(', ')
+    };
+  };
+
   const processJson = (jsonString: string) => {
     try {
-      const json = JSON.parse(jsonString);
-      
-      if (!Array.isArray(json)) {
-        throw new Error("Invalid format: Expected an array of objects.");
+      const data = JSON.parse(jsonString);
+      let rawItems = [];
+
+      if (Array.isArray(data)) {
+        rawItems = data;
+      } else if (data && data.branches && Array.isArray(data.branches)) {
+        // Handle "Company with Branches" format
+        rawItems = data.branches;
+      } else {
+        rawItems = [data];
       }
 
-      const validCompanies: Company[] = json.map((item: any, idx: number) => {
-        if (!item.name || !item.address) {
-          throw new Error(`Item at index ${idx} is missing required 'name' or 'address' field.`);
-        }
+      const validCompanies: Company[] = rawItems.map((item: any, idx: number) => {
+        const name = item.name || item.branchName || `Imported ${idx + 1}`;
+        const address = item.address || '';
+        const deliveryInfo = item.deliveryInfo || item.details || item.instruction || '';
+
+        const extracted = extractContactInfo(deliveryInfo);
+
         return {
           id: crypto.randomUUID(),
-          name: item.name,
-          address: item.address,
-          deliveryDetails: item.details || item.deliveryDetails || item.instruction || '',
+          name,
+          address,
+          deliveryDetails: deliveryInfo,
           assignedTour: item.tour || '',
-          contactPerson: item.contactPerson || item.person || item.contact || '',
-          phoneNumber: item.phoneNumber || item.phone || item.mobile || '',
+          contactPerson: item.contactPerson || extracted.contactPerson,
+          phoneNumber: item.phoneNumber || extracted.phoneNumber,
           images: item.images || []
         };
       });
@@ -75,13 +103,13 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
           <Copy className="w-4 h-4 text-blue-500" />
           <span>Batch Data Import (JSON)</span>
         </label>
-        <textarea 
+        <textarea
           className="w-full h-48 p-4 bg-gray-50 border border-gray-200 rounded-2xl font-mono text-xs focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
           placeholder='[{"name": "Company X", "address": "St 44", "phone": "+123", "contact": "John Doe"}]'
           value={jsonInput}
           onChange={(e) => setJsonInput(e.target.value)}
         />
-        <button 
+        <button
           onClick={handleManualImport}
           className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg flex items-center justify-center space-x-2 active:scale-[0.98]"
         >
@@ -99,15 +127,15 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
         </div>
       </div>
 
-      <div 
+      <div
         onClick={() => fileInputRef.current?.click()}
         className="border-2 border-dashed border-gray-200 rounded-3xl p-6 text-center hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer group"
       >
-        <input 
-          type="file" 
-          accept=".json" 
-          className="hidden" 
-          ref={fileInputRef} 
+        <input
+          type="file"
+          accept=".json"
+          className="hidden"
+          ref={fileInputRef}
           onChange={handleFileUpload}
         />
         <div className="bg-gray-100 group-hover:bg-blue-100 p-3 rounded-full w-fit mx-auto mb-3 transition-colors">
@@ -131,12 +159,12 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
       )}
 
       <div className="bg-blue-50 p-6 rounded-3xl border border-blue-100">
-         <div className="flex items-center space-x-2 text-blue-800 font-black mb-3">
-            <Info className="w-4 h-4" />
-            <span className="text-sm uppercase tracking-wider">Example Structure</span>
-         </div>
-         <pre className="text-[10px] text-blue-700 overflow-x-auto bg-blue-100/30 p-4 rounded-xl font-mono leading-relaxed">
-{`[
+        <div className="flex items-center space-x-2 text-blue-800 font-black mb-3">
+          <Info className="w-4 h-4" />
+          <span className="text-sm uppercase tracking-wider">Example Structure</span>
+        </div>
+        <pre className="text-[10px] text-blue-700 overflow-x-auto bg-blue-100/30 p-4 rounded-xl font-mono leading-relaxed">
+          {`[
   {
     "name": "Tesla Berlin",
     "address": "Giga Factory 1",
@@ -146,7 +174,7 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
     "tour": "T-102"
   }
 ]`}
-         </pre>
+        </pre>
       </div>
     </div>
   );
