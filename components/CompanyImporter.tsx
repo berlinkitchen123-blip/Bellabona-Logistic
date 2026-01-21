@@ -100,18 +100,18 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
     <div className="space-y-6">
       <div className="space-y-3">
         <label className="text-sm font-black text-gray-700 flex items-center space-x-2">
-          <Copy className="w-4 h-4 text-blue-500" />
+          <Copy className="w-4 h-4 text-emerald-500" />
           <span>Batch Data Import (JSON)</span>
         </label>
         <textarea
-          className="w-full h-48 p-4 bg-gray-50 border border-gray-200 rounded-2xl font-mono text-xs focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
+          className="w-full h-48 p-4 bg-gray-50 border border-gray-200 rounded-2xl font-mono text-xs focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 outline-none transition-all"
           placeholder='[{"name": "Company X", "address": "St 44", "phone": "+123", "contact": "John Doe"}]'
           value={jsonInput}
           onChange={(e) => setJsonInput(e.target.value)}
         />
         <button
           onClick={handleManualImport}
-          className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg flex items-center justify-center space-x-2 active:scale-[0.98]"
+          className="w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg flex items-center justify-center space-x-2 active:scale-[0.98]"
         >
           <Upload className="w-5 h-5" />
           <span>Process & Merge Data</span>
@@ -129,7 +129,7 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
 
       <div
         onClick={() => fileInputRef.current?.click()}
-        className="border-2 border-dashed border-gray-200 rounded-3xl p-6 text-center hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer group"
+        className="border-2 border-dashed border-gray-200 rounded-3xl p-6 text-center hover:border-emerald-400 hover:bg-emerald-50 transition-all cursor-pointer group"
       >
         <input
           type="file"
@@ -138,8 +138,8 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
           ref={fileInputRef}
           onChange={handleFileUpload}
         />
-        <div className="bg-gray-100 group-hover:bg-blue-100 p-3 rounded-full w-fit mx-auto mb-3 transition-colors">
-          <FileCode className="w-6 h-6 text-gray-400 group-hover:text-blue-600" />
+        <div className="bg-gray-100 group-hover:bg-emerald-100 p-3 rounded-full w-fit mx-auto mb-3 transition-colors">
+          <FileCode className="w-6 h-6 text-gray-400 group-hover:text-emerald-600" />
         </div>
         <p className="text-gray-900 font-bold">Select .json file</p>
       </div>
@@ -158,12 +158,12 @@ export const CompanyImporter: React.FC<Props> = ({ onImport }) => {
         </div>
       )}
 
-      <div className="bg-blue-50 p-6 rounded-3xl border border-blue-100">
-        <div className="flex items-center space-x-2 text-blue-800 font-black mb-3">
+      <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100">
+        <div className="flex items-center space-x-2 text-emerald-800 font-black mb-3">
           <Info className="w-4 h-4" />
           <span className="text-sm uppercase tracking-wider">Example Structure</span>
         </div>
-        <pre className="text-[10px] text-blue-700 overflow-x-auto bg-blue-100/30 p-4 rounded-xl font-mono leading-relaxed">
+        <pre className="text-[10px] text-emerald-700 overflow-x-auto bg-emerald-100/30 p-4 rounded-xl font-mono leading-relaxed">
           {`[
   {
     "name": "Tesla Berlin",

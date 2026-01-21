@@ -18,7 +18,8 @@ import {
   Trash2,
   Loader2,
   Cloud as CloudCheck,
-  CloudOff
+  CloudOff,
+  Leaf
 } from 'lucide-react';
 import { ref, onValue, set } from "firebase/database";
 import { db } from './firebase';
@@ -128,7 +129,7 @@ const App: React.FC = () => {
     <button
       onClick={() => { setActiveView(view); setSelectedCompanyId(null); }}
       className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all ${activeView === view
-          ? 'bg-blue-600 text-white shadow-lg'
+          ? 'bg-emerald-800 text-white shadow-lg'
           : 'text-gray-600 hover:bg-gray-100'
         }`}
     >
@@ -140,8 +141,8 @@ const App: React.FC = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
-        <p className="text-gray-500 font-bold animate-pulse tracking-widest uppercase text-xs">Connecting to Logistic Cloud...</p>
+        <Loader2 className="w-12 h-12 text-emerald-800 animate-spin mb-4" />
+        <p className="text-gray-500 font-bold animate-pulse tracking-widest uppercase text-xs">Connecting to Bellabona Cloud...</p>
       </div>
     );
   }
@@ -151,10 +152,10 @@ const App: React.FC = () => {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => { setActiveView('dashboard'); setSelectedCompanyId(null); }}>
-            <div className="bg-blue-600 p-2 rounded-xl shadow-md">
-              <Truck className="w-6 h-6 text-white" />
+            <div className="bg-emerald-800 p-2 rounded-xl shadow-md">
+              <Leaf className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-xl font-black text-gray-900 tracking-tight hidden sm:block">LogiTrain</h1>
+            <h1 className="text-xl font-black text-emerald-950 tracking-tight hidden sm:block">BELLABONA</h1>
           </div>
 
           <nav className="hidden md:flex items-center space-x-1">
@@ -180,7 +181,7 @@ const App: React.FC = () => {
             </div>
             <button
               onClick={() => { setActiveView('settings'); setSelectedCompanyId(null); }}
-              className={`p-2 rounded-full transition-colors ${activeView === 'settings' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+              className={`p-2 rounded-full transition-colors ${activeView === 'settings' ? 'bg-emerald-800 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
             >
               <SettingsIcon className="w-5 h-5" />
             </button>
@@ -197,11 +198,11 @@ const App: React.FC = () => {
             </div>
 
             <div className="relative group mb-8">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400 group-focus-within:text-emerald-600 transition-colors" />
               <input
                 type="text"
                 placeholder="Type company name..."
-                className="w-full pl-14 pr-4 py-5 bg-white border-2 border-gray-100 rounded-3xl text-xl shadow-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
+                className="w-full pl-14 pr-4 py-5 bg-white border-2 border-gray-100 rounded-3xl text-xl shadow-xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 outline-none transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
@@ -215,10 +216,10 @@ const App: React.FC = () => {
                   return (
                     <div
                       key={company.id}
-                      className="w-full bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-blue-300 hover:shadow-md transition-all group"
+                      className="w-full bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-emerald-300 hover:shadow-md transition-all group"
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="bg-blue-50 p-3 rounded-xl text-blue-600">
+                        <div className="bg-emerald-50 p-3 rounded-xl text-emerald-700 group-hover:bg-emerald-800 group-hover:text-white transition-colors">
                           <Building2 className="w-6 h-6" />
                         </div>
                         <div className="text-left">
@@ -233,7 +234,7 @@ const App: React.FC = () => {
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => handleSelectCompany(company.id, false)}
-                          className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${hasData ? 'bg-blue-600 text-white shadow-lg hover:bg-blue-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                          className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${hasData ? 'bg-emerald-800 text-white shadow-lg hover:bg-emerald-900' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                         >
                           View
                         </button>
@@ -253,13 +254,13 @@ const App: React.FC = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                    <span className="text-blue-700 font-black text-xs uppercase tracking-widest block mb-2">Instructions</span>
-                    <p className="text-sm text-blue-800 font-medium">Search for your next delivery stop to view site specific info.</p>
+                  <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <span className="text-emerald-800 font-black text-xs uppercase tracking-widest block mb-2">Instructions</span>
+                    <p className="text-sm text-emerald-900 font-medium">Search for your next delivery stop to view site specific info.</p>
                   </div>
                   <div className="p-6 bg-gray-50 rounded-2xl border border-gray-200">
                     <span className="text-gray-700 font-black text-xs uppercase tracking-widest block mb-2">Quick Access</span>
-                    <button onClick={() => setActiveView('driver-view')} className="text-sm text-gray-800 font-bold flex items-center hover:text-blue-600 transition-colors">
+                    <button onClick={() => setActiveView('driver-view')} className="text-sm text-gray-800 font-bold flex items-center hover:text-emerald-700 transition-colors">
                       View SOP Steps <ChevronRight className="w-4 h-4 ml-1" />
                     </button>
                   </div>
@@ -295,7 +296,7 @@ const App: React.FC = () => {
                 <input
                   type="text"
                   placeholder="Filter database..."
-                  className="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+                  className="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -340,20 +341,20 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-200 flex md:hidden items-center justify-around p-3 z-50">
-        <button onClick={() => { setActiveView('dashboard'); setSelectedCompanyId(null); }} className={`p-2 flex flex-col items-center ${activeView === 'dashboard' ? 'text-blue-600' : 'text-gray-400'}`}>
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-gray-200 flex md:hidden items-center justify-around p-3 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <button onClick={() => { setActiveView('dashboard'); setSelectedCompanyId(null); }} className={`p-4 flex flex-col items-center ${activeView === 'dashboard' ? 'text-emerald-800' : 'text-gray-400'}`}>
           <Search className="w-6 h-6" />
           <span className="text-[10px] mt-1 font-bold uppercase tracking-tighter">Lookup</span>
         </button>
-        <button onClick={() => { setActiveView('driver-view'); setSelectedCompanyId(null); }} className={`p-2 flex flex-col items-center ${activeView === 'driver-view' ? 'text-blue-600' : 'text-gray-400'}`}>
+        <button onClick={() => { setActiveView('driver-view'); setSelectedCompanyId(null); }} className={`p-4 flex flex-col items-center ${activeView === 'driver-view' ? 'text-emerald-800' : 'text-gray-400'}`}>
           <ClipboardCheck className="w-6 h-6" />
           <span className="text-[10px] mt-1 font-bold uppercase tracking-tighter">Guide</span>
         </button>
-        <button onClick={() => { setActiveView('companies'); setSelectedCompanyId(null); }} className={`p-2 flex flex-col items-center ${activeView === 'companies' ? 'text-blue-600' : 'text-gray-400'}`}>
+        <button onClick={() => { setActiveView('companies'); setSelectedCompanyId(null); }} className={`p-4 flex flex-col items-center ${activeView === 'companies' ? 'text-emerald-800' : 'text-gray-400'}`}>
           <Building2 className="w-6 h-6" />
           <span className="text-[10px] mt-1 font-bold uppercase tracking-tighter">DB</span>
         </button>
-        <button onClick={() => { setActiveView('settings'); setSelectedCompanyId(null); }} className={`p-2 flex flex-col items-center ${activeView === 'settings' ? 'text-blue-600' : 'text-gray-400'}`}>
+        <button onClick={() => { setActiveView('settings'); setSelectedCompanyId(null); }} className={`p-4 flex flex-col items-center ${activeView === 'settings' ? 'text-emerald-800' : 'text-gray-400'}`}>
           <SettingsIcon className="w-6 h-6" />
           <span className="text-[10px] mt-1 font-bold uppercase tracking-tighter">Apps</span>
         </button>
