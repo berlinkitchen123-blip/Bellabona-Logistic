@@ -9,6 +9,8 @@ interface Props {
 }
 
 export const CompanyList: React.FC<Props> = ({ companies, onDelete }) => {
+  const [confirmDeleteId, setConfirmDeleteId] = React.useState<string | null>(null);
+
   if (companies.length === 0) {
     return (
       <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
@@ -55,10 +57,26 @@ export const CompanyList: React.FC<Props> = ({ companies, onDelete }) => {
           </div>
 
           <button
-            onClick={() => onDelete(company.id)}
-            className="text-gray-400 hover:text-red-500 p-2 hover:bg-red-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              if (confirmDeleteId === company.id) {
+                onDelete(company.id);
+                setConfirmDeleteId(null);
+              } else {
+                setConfirmDeleteId(company.id);
+              }
+            }}
+            className={`p-2 rounded-lg transition-all ${confirmDeleteId === company.id
+                ? 'bg-red-500 text-white shadow-lg'
+                : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
+              }`}
           >
-            <Trash2 className="w-5 h-5" />
+            {confirmDeleteId === company.id ? (
+              <span className="text-xs font-bold px-1 animate-in fade-in">Confirm?</span>
+            ) : (
+              <Trash2 className="w-5 h-5" />
+            )}
           </button>
         </div>
       ))}

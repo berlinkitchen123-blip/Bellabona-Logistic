@@ -87,10 +87,9 @@ const App: React.FC = () => {
   };
 
   const handleDeleteCompany = (id: string) => {
-    if (confirm("Delete this company from the database?")) {
-      const updated = companies.filter(c => c.id !== id);
-      syncData('companies', updated);
-    }
+    // Confirmation handled in UI
+    const updated = companies.filter(c => c.id !== id);
+    syncData('companies', updated);
   };
 
   const handleUpdateCompany = (updatedCompany: Company) => {
