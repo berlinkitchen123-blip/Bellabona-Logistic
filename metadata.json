@@ -1,5 +1,5 @@
 {
-  "name": "LogiTrain Dispatch & Delivery Hub",
+  "name": "Bellabona Logistic",
   "description": "A comprehensive platform for managing company delivery logistics and training drivers on the OMS Dispatch Standard Operating Procedure (SOP). Features JSON data import for company addresses and a step-by-step visual training guide.",
   "requestFramePermissions": [
     "camera"
