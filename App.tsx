@@ -129,8 +129,8 @@ const App: React.FC = () => {
     <button
       onClick={() => { setActiveView(view); setSelectedCompanyId(null); }}
       className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all ${activeView === view
-          ? 'bg-emerald-800 text-white shadow-lg'
-          : 'text-gray-600 hover:bg-gray-100'
+        ? 'bg-emerald-800 text-white shadow-lg'
+        : 'text-gray-600 hover:bg-gray-100'
         }`}
     >
       {icon}
@@ -152,10 +152,7 @@ const App: React.FC = () => {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => { setActiveView('dashboard'); setSelectedCompanyId(null); }}>
-            <div className="bg-emerald-800 p-2 rounded-xl shadow-md">
-              <Leaf className="w-6 h-6 text-white" />
-            </div>
-            <h1 className="text-xl font-black text-emerald-950 tracking-tight hidden sm:block">BELLABONA</h1>
+            <h1 className="text-xl font-black text-emerald-950 tracking-tight block">BELLABONA</h1>
           </div>
 
           <nav className="hidden md:flex items-center space-x-1">
