@@ -17,7 +17,7 @@ import {
   Camera,
   Trash2,
   Loader2,
-  CloudCheck,
+      Cloud as CloudCheck,
   CloudOff
 } from 'lucide-react';
 import { ref, onValue, set } from "firebase/database";
