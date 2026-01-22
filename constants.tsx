@@ -119,5 +119,34 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "CRITICAL: Do not scan the boxes you just prepared unless you are also the driver!",
       "Always check: Prepared Box ≠ Driving Company."
     ]
+  },
+  {
+    id: 13,
+    title: "13. Departure",
+    points: [
+      "After scanning all boxes for your route, you will see a Time Selection screen.",
+      "Select '12 min' (Loading Time).",
+      "Press Submit to start navigation."
+    ]
+  },
+  {
+    id: 14,
+    title: "14. Delivery & Proof",
+    points: [
+      "Navigate to stop. Check app/box for entry codes.",
+      "Drop-off: Place boxes at the required spot.",
+      "App Action: Select ALL delivered boxes -> Choose 'Delivered on reception'.",
+      "Time: Select '6 minute'.",
+      "Photo: Click Camera Icon -> Take photo of boxes -> Submit."
+    ]
+  },
+  {
+    id: 15,
+    title: "15. Return Data",
+    points: [
+      "Collect empty boxes from the company if available.",
+      "Record the count of collected boxes for each company.",
+      "Report: Give the final counts to the Manager at the end of the tour."
+    ]
   }
 ];
