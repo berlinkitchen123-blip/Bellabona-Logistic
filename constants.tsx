@@ -1,124 +1,95 @@
-
 import { SOPStep } from './types';
 
 export const INITIAL_SOP_STEPS: SOPStep[] = [
   {
     id: 1,
-    title: "Tour & OMS Preparation",
+    title: "1. Morning Routine (8:30 AM)",
     points: [
-      "Check which tour is assigned to you (shown at the bottom of every tour).",
-      "Open OMS → Dispatcher section.",
-      "Search the assigned company.",
-      "Refresh OMS compulsorily at 8:30 AM."
-    ]
+      "Wait for the 8:30 AM order cutoff time.",
+      "CRITICAL: Refresh the browser page once after 8:30 AM to load the latest data.",
+      "Ensure your tablet is charged and connected to Wi-Fi.",
+    ],
+    image: "/sop-images/oms_dispatcher_search.png"
   },
   {
     id: 2,
-    title: "Order Type Handling (Regular + Catering)",
+    title: "2. Identify Assignments",
     points: [
-      "If a company has both regular and catering orders, they must be packed together.",
-      "Regular and catering orders from the same company are NOT treated as separate companies for packing.",
-      "Example: Omio and Omio-Catering orders must be packed in the same Omio hot and cold boxes."
-    ]
+      "Check the Weekly Tour Plan sheet.",
+      "Driver (Top Row): Person driving the vehicle.",
+      "Packator (Bottom Row): You! (Dispatcher packing the tour).",
+      "Assignments: List of companies in the column between the Driver and Packator."
+    ],
+    image: "/sop-images/weekly_plan_roles.png"
   },
   {
     id: 3,
-    title: "Sticker Rules",
+    title: "3. Locate Branch in OMS",
     points: [
-      "Minimum 2 hand-written stickers required per company.",
-      "If hot and cold boxes are separate, stickers must be applied on both boxes.",
-      "If all dishes are packed in one box, all stickers must be applied on that box.",
-      "No box is allowed to leave the dispatch area without a sticker."
-    ]
+      "Go to the 'Dispatcher' tab in the OMS.",
+      "Check the date (top right) is correct.",
+      "Use the search bar to find your assigned company.",
+    ],
+    image: "/sop-images/oms_dispatcher_search.png"
   },
   {
     id: 4,
-    title: "ProGlove Connection",
+    title: "4. Preparation & Scanner Setup",
     points: [
-      "Open Insider Mobile App on the tablet.",
-      "Scan the QR code to connect ProGlove with the tablet.",
-      "Ensure connection is successful before scanning."
+      "Collect empty boxes from the store based on order size.",
+      "Apply labels to the boxes.",
+      "Open 'Inside Mobile' app on your tablet.",
+      "Scan the QR code on the tablet with your Pro-Glove scanner to pair."
     ]
   },
   {
     id: 5,
-    title: "Packing Decision Rules",
+    title: "5. Start Scanning & Cold Box",
     points: [
-      "Check total number of dishes ordered.",
-      "If 10–12 dishes, pack all dishes in one box.",
-      "If hot dishes are 6 or more, place a red plate at the bottom.",
-      "Red plate is mandatory for all hot dishes."
-    ]
+      "Click the green 'START SCANNING' button.",
+      "Prompt: 'Scan Box' -> Scan the QR code on the Cold Box label.",
+      "Fetch Cold dishes (Salads/Desserts) as indicated by the Red Box counter.",
+      "Green Box = Scanned Quantity. Red Box = Remaining Quantity."
+    ],
+    image: "/sop-images/box_scan_prompt.png"
   },
   {
     id: 6,
-    title: "Scanning Process – Cold Dishes",
+    title: "6. Cold Box Packing Rules",
     points: [
-      "Click Start Scanning.",
-      "Scan Box QR Code (mandatory).",
-      "Scan Cold Dish Letter QR Code.",
-      "Scan Bowl QR Code.",
-      "Follow on-screen instructions."
-    ]
+      "Pack all Cold Addons (Salads, Desserts, Drinks) in the Cold Box.",
+      "Never put Hot dishes in the Cold Box.",
+      "Close the box once the Green count matches the Total."
+    ],
+    image: "/sop-images/scanning_interface.png"
   },
   {
     id: 7,
-    title: "Scanning Process – Hot Dishes",
+    title: "7. Hot Box Transition",
     points: [
-      "Scan the hot box again.",
-      "Place red plate at the bottom.",
-      "Scan Hot Dish Letter QR Code.",
-      "Scan Bowl QR Code.",
-      "Ensure physical dish count matches OMS for both hot and cold dishes."
+      "System will prompt for the Hot Box.",
+      "Bring the Hot Box for the same company.",
+      "Scan the QR code on the Hot Box label."
     ]
   },
   {
     id: 8,
-    title: "Add-ons Handling",
+    title: "8. Red Plate & Hot Dish Rules",
     points: [
-      "Add-ons are currently closed manually.",
-      "Add-on scanning will be implemented in the future."
-    ]
+      "Red Plate Rule: Place Red Plate at bottom of Hot Box.",
+      "Workaround: If asked to scan Red Plate, RE-SCAN the Hot Box QR code.",
+      "Scanning Order: ALWAYS scan Dish Letter QR First, then scan Bowl QR.",
+      "Hot Addons: Pack Chicken, Rice, Soup, Samosas with Hot Dish."
+    ],
+    image: "/sop-images/red_plate_workaround.png"
   },
   {
     id: 9,
-    title: "Storage & Segregation Rules",
+    title: "9. Completion",
     points: [
-      "Chocolates: cold section only (always with cold dishes).",
-      "FJ Raugh: dedicated section.",
-      "Jarritos: bottom fridge.",
-      "YFood drinks: dedicated section."
-    ]
-  },
-  {
-    id: 10,
-    title: "Packing Rules",
-    points: [
-      "Only Chicken, Roasted Vegetables, Rice, and Soup are allowed in hot boxes.",
-      "All other items must go into cold boxes.",
-      "If packed in one box, chocolates must be placed in one corner of the cold section.",
-      "Use a paper bag if there are many add-ons with mixed dishes.",
-      "Make sure the dish is clean, no leakage, and has the dish letter.",
-      "Do not tilt dishes. Distribution should be even."
-    ]
-  },
-  {
-    id: 11,
-    title: "Final Dispatch Actions",
-    points: [
-      "After completing dispatch, collect all papers and QR stickers.",
-      "Place all papers for the company in any one box.",
-      "Apply stickers correctly as per packing configuration."
-    ]
-  },
-  {
-    id: 12,
-    title: "Final OMS Verification",
-    points: [
-      "Refresh OMS.",
-      "Verify all companies.",
-      "Confirm all dishes are scanned and assigned to correct boxes.",
-      "Dispatch is complete only after OMS and physical packing fully match."
+      "Ensure all Red counters are at 0.",
+      "Verify physically that boxes are packed correctly.",
+      "Move to the next company in your assignment list."
     ]
   }
 ];

@@ -19,7 +19,8 @@ import {
   Loader2,
   Cloud as CloudCheck,
   CloudOff,
-  Leaf
+  Leaf,
+  RotateCcw
 } from 'lucide-react';
 import { ref, onValue, set } from "firebase/database";
 import { db } from './firebase';
@@ -98,10 +99,15 @@ const App: React.FC = () => {
   };
 
   const handleUpdateStepImage = (stepId: number, base64Image: string) => {
-    const updated = sopSteps.map(step =>
-      step.id === stepId ? { ...step, image: base64Image } : step
-    );
+    const updated = sopSteps.map(s => s.id === stepId ? { ...s, image: base64Image } : s);
     syncData('sopSteps', updated);
+  };
+
+  const handleResetTraining = () => {
+    if (window.confirm("Update Training Guide to latest content? This will overwrite custom edits.")) {
+      syncData('sopSteps', INITIAL_SOP_STEPS);
+      alert("Training Guide updated to latest version!");
+    }
   };
 
   const handleSelectCompany = (id: string, edit: boolean = false) => {
@@ -323,6 +329,20 @@ const App: React.FC = () => {
             </h2>
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
               <CompanyImporter onImport={handleImportCompanies} />
+            </div>
+
+            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
+              <div>
+                <h3 className="font-bold text-gray-900 mb-1">Update Training Guide</h3>
+                <p className="text-sm text-gray-500">Reset guides to the latest standard operating procedures.</p>
+              </div>
+              <button
+                onClick={handleResetTraining}
+                className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-xl font-bold transition-colors"
+              >
+                <RotateCcw className="w-5 h-5" />
+                <span>Update Guide</span>
+              </button>
             </div>
           </div>
         )}
