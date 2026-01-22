@@ -88,8 +88,26 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
     title: "9. Completion",
     points: [
       "Ensure all Red counters are at 0.",
-      "Verify physically that boxes are packed correctly.",
-      "Move to the next company in your assignment list."
+      "Verify physically that boxes are packed correctly."
+    ]
+  },
+  {
+    id: 10,
+    title: "10. Paperwork & Stickers",
+    points: [
+      "Paperwork: Place ALL delivery papers in ONE box (can be Hot or Cold box).",
+      "Stickers: Stick delivery stickers on the FRONT side of every box.",
+      "Rule: Every box must have AT LEAST one sticker.",
+      "Excess Stickers: If you have extra stickers (e.g., from addons), put 2-3 stickers on one box."
+    ]
+  },
+  {
+    id: 11,
+    title: "11. Finalizing",
+    points: [
+      "Load all completed and labeled boxes into the Trolley.",
+      "Double check you haven't left any boxes behind.",
+      "Proceed to your next assigned company in the Tour Plan."
     ]
   }
 ];
