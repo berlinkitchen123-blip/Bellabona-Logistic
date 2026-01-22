@@ -55,11 +55,16 @@ const App: React.FC = () => {
 
     const unsubSop = onValue(sopRef, (snapshot) => {
       const data = snapshot.val();
-      if (data && data.length === INITIAL_SOP_STEPS.length) {
+      // Auto-update if:
+      // 1. No data
+      // 2. Length mismatch (new steps added)
+      // 3. Stale image paths (detected by absolute path usage or old base path)
+      const hasStaleImages = data?.[0]?.image?.startsWith('/') || data?.[0]?.image?.includes('Bellabona-Logistic');
+
+      if (data && data.length === INITIAL_SOP_STEPS.length && !hasStaleImages) {
         setSopSteps(data);
       } else {
-        // Auto-update if missing or length mismatch (e.g. new steps added)
-        // This ensures users always get the latest guide without manual reset
+        console.log("Auto-updating SOP guide to latest version...");
         set(sopRef, INITIAL_SOP_STEPS);
         setSopSteps(INITIAL_SOP_STEPS);
       }
@@ -345,6 +350,10 @@ const App: React.FC = () => {
                 <RotateCcw className="w-5 h-5" />
                 <span>Update Guide</span>
               </button>
+            </div>
+
+            <div className="text-center text-xs text-gray-400 pb-10">
+              App Version v1.2 • SOP Sync Active
             </div>
           </div>
         )}

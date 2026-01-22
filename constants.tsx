@@ -9,7 +9,7 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "CRITICAL: Refresh the browser page once after 8:30 AM to load the latest data.",
       "Ensure your tablet is charged and connected to Wi-Fi.",
     ],
-    image: "/Bellabona-Logistic/sop-images/oms_dispatcher_search.png"
+    image: "sop-images/oms_dispatcher_search.png"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "Packator (Bottom Row): You! (Dispatcher packing the tour).",
       "Assignments: List of companies in the column between the Driver and Packator."
     ],
-    image: "/Bellabona-Logistic/sop-images/weekly_plan_roles.png"
+    image: "sop-images/weekly_plan_roles.png"
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "Check the date (top right) is correct.",
       "Use the search bar to find your assigned company.",
     ],
-    image: "/Bellabona-Logistic/sop-images/oms_dispatcher_search.png"
+    image: "sop-images/oms_dispatcher_search.png"
   },
   {
     id: 4,
@@ -51,7 +51,7 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "Fetch Cold dishes (Salads/Desserts) as indicated by the Red Box counter.",
       "Green Box = Scanned Quantity. Red Box = Remaining Quantity."
     ],
-    image: "/Bellabona-Logistic/sop-images/box_scan_prompt.png"
+    image: "sop-images/box_scan_prompt.png"
   },
   {
     id: 6,
@@ -61,7 +61,7 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "Never put Hot dishes in the Cold Box.",
       "Close the box once the Green count matches the Total."
     ],
-    image: "/Bellabona-Logistic/sop-images/scanning_interface.png"
+    image: "sop-images/scanning_interface.png"
   },
   {
     id: 7,
@@ -81,7 +81,7 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "Scanning Order: ALWAYS scan Dish Letter QR First, then scan Bowl QR.",
       "Hot Addons: Pack Chicken, Rice, Soup, Samosas with Hot Dish."
     ],
-    image: "/Bellabona-Logistic/sop-images/red_plate_workaround.png"
+    image: "sop-images/red_plate_workaround.png"
   },
   {
     id: 9,
