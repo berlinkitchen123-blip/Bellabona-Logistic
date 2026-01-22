@@ -55,11 +55,13 @@ const App: React.FC = () => {
 
     const unsubSop = onValue(sopRef, (snapshot) => {
       const data = snapshot.val();
-      if (data) {
+      if (data && data.length === INITIAL_SOP_STEPS.length) {
         setSopSteps(data);
       } else {
-        // Seed initial steps if empty
+        // Auto-update if missing or length mismatch (e.g. new steps added)
+        // This ensures users always get the latest guide without manual reset
         set(sopRef, INITIAL_SOP_STEPS);
+        setSopSteps(INITIAL_SOP_STEPS);
       }
     });
 
