@@ -103,7 +103,7 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
   },
   {
     id: 11,
-    title: "11. Finalizing",
+    title: "11. Trolley & Packator Finish",
     points: [
       "Load all completed and labeled boxes into the Trolley.",
       "Double check you haven't left any boxes behind.",
@@ -112,27 +112,57 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
   },
   {
     id: 12,
-    title: "12. Driver Workflow (Tiramizoo)",
+    title: "12. Tiramizoo: Start Tour",
     points: [
       "Open Tiramizoo App & Login.",
-      "Select First Point (Kitchen Location) -> Click Scan Button (Top Right).",
-      "Scan QR codes for YOUR DRIVING companies (Top Row of Tour Plan).",
-      "CRITICAL: Do not scan the boxes you just prepared unless you are also the driver!",
-      "Always check: Prepared Box ≠ Driving Company."
-    ]
+      "Condition Check: You will see 'Do you meet these conditions?'.",
+      "Action: Click 'Confirm'."
+    ],
+    image: "sop-images/tiramizoo_conditions.png"
   },
   {
     id: 13,
-    title: "13. Departure",
+    title: "13. Tiramizoo: Dashboard",
     points: [
-      "After scanning all boxes for your route, you will see a Time Selection screen.",
-      "Select '12 min' (Loading Time).",
-      "Press Submit to start navigation."
-    ]
+      "View Dashboard: Top item is the Kitchen (Pickup Point).",
+      "First Stop: Friedrich-Engels-Straße 24 (or similar).",
+      "Verify '12 min' service time is visible.",
+      "Action: Click on the first stop to begin loop."
+    ],
+    image: "sop-images/tiramizoo_dashboard.png"
   },
   {
     id: 14,
-    title: "14. Delivery & Proof",
+    title: "14. Tiramizoo: Scan Box",
+    points: [
+      "You will see the list of companies to collect (e.g., Jameda, Digital Charging).",
+      "Action: Click the 'Scan' button (scanner icon) to open camera.",
+      "Scan the QR codes of YOUR assigned driving companies.",
+      "Green Check: Box is successfully scanned."
+    ],
+    image: "sop-images/tiramizoo_scanner.png"
+  },
+  {
+    id: 15,
+    title: "15. Tiramizoo: Finish Loading",
+    points: [
+      "Verify all companies have Green Checks or correct box counts (e.g. 3|3).",
+      "Scroll to bottom.",
+      "Action: Click 'Finish' to complete the Pickup phase."
+    ],
+    image: "sop-images/tiramizoo_finish.png"
+  },
+  {
+    id: 16,
+    title: "16. Departure & Navigation",
+    points: [
+      "Time Selection: Select '12 min' (Loading Time) and Submit.",
+      "Route: Click 'Navigate' on the next stop to start driving."
+    ]
+  },
+  {
+    id: 17,
+    title: "17. Delivery & Proof",
     points: [
       "Navigate to stop. Check app/box for entry codes.",
       "Drop-off: Place boxes at the required spot.",
@@ -142,8 +172,8 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
     ]
   },
   {
-    id: 15,
-    title: "15. Return Data",
+    id: 18,
+    title: "18. Return Data",
     points: [
       "Collect empty boxes from the company if available.",
       "Record the count of collected boxes for each company.",
