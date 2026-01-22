@@ -103,11 +103,21 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
   },
   {
     id: 11,
-    title: "11. Finalizing",
     points: [
       "Load all completed and labeled boxes into the Trolley.",
       "Double check you haven't left any boxes behind.",
       "Proceed to your next assigned company in the Tour Plan."
+    ]
+  },
+  {
+    id: 12,
+    title: "12. Driver Workflow (Tiramizoo)",
+    points: [
+      "Open Tiramizoo App & Login.",
+      "Select First Point (Kitchen Location) -> Click Scan Button (Top Right).",
+      "Scan QR codes for YOUR DRIVING companies (Top Row of Tour Plan).",
+      "CRITICAL: Do not scan the boxes you just prepared unless you are also the driver!",
+      "Always check: Prepared Box ≠ Driving Company."
     ]
   }
 ];
