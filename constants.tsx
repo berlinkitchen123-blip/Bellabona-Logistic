@@ -39,8 +39,10 @@ export const INITIAL_SOP_STEPS: SOPStep[] = [
       "Collect empty boxes from the store based on order size.",
       "Apply labels to the boxes.",
       "Open 'Inside Mobile' app on your tablet.",
-      "Scan the QR code on the tablet with your Pro-Glove scanner to pair."
-    ]
+      "Action: Click 'SCAN2PAIR' to show the pairing QR Code.",
+      "Scan this QR code with your ProGlove scanner to connect."
+    ],
+    image: "sop-images/proglove_scan2pair.png"
   },
   {
     id: 5,
