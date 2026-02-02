@@ -10,7 +10,6 @@ import {
   ChevronRight,
   ChevronLeft,
   Trash2,
-  Package,
   Plus,
   Truck
 } from 'lucide-react';
