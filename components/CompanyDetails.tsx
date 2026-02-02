@@ -1,5 +1,6 @@
 
 import React, { useRef, useState } from 'react';
+// Updated layout to show full image and reordered sections
 import { Company } from '../types';
 import {
   MapPin,
