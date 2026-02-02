@@ -1,5 +1,6 @@
 
 import React, { useRef, useState } from 'react';
+// updated
 import { Company } from '../types';
 import {
   MapPin,
