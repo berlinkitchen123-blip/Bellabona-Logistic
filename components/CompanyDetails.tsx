@@ -62,13 +62,13 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
   return (
     <div className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 flex flex-col">
       {/* Visual Header / Carousel */}
-      <div className="h-72 md:h-96 bg-gray-50 relative group">
+      <div className="w-full bg-gray-50 relative group min-h-[300px]">
         {images.length > 0 ? (
           <>
             <img
               src={images[imgIdx]}
               alt="Location"
-              className="w-full h-full object-cover"
+              className="w-full h-auto"
             />
             {images.length > 1 && (
               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 flex justify-between opacity-0 group-hover:opacity-100 transition-opacity">
@@ -76,7 +76,7 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
                 <button onClick={() => setImgIdx(p => p < images.length - 1 ? p + 1 : 0)} className="bg-white/90 p-3 rounded-full shadow-lg hover:bg-white text-emerald-800"><ChevronRight /></button>
               </div>
             )}
-            <div className="absolute top-4 right-4 flex space-x-2">
+            <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/50 to-transparent flex justify-end space-x-2">
               <button
                 onClick={() => removeImage(imgIdx)}
                 className="bg-red-500/80 backdrop-blur-md text-white p-2 rounded-xl shadow-lg hover:bg-red-600 transition-colors"
@@ -97,7 +97,7 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
             </div>
           </>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 px-10 text-center">
+          <div className="w-full min-h-[300px] flex flex-col items-center justify-center text-gray-400 px-10 text-center py-20">
             <div className="bg-gray-100 p-8 rounded-[2rem] mb-4">
               <Camera className="w-16 h-16 opacity-20" />
             </div>
@@ -199,6 +199,25 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
           </div>
         </div>
 
+        <div className="bg-gray-50 rounded-[2rem] p-8 border border-gray-200 mb-10">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="bg-white p-2 rounded-xl text-gray-600 shadow-sm"><Info className="w-6 h-6" /></div>
+            <h4 className="text-xl font-black text-gray-900">Delivery Instructions</h4>
+          </div>
+          {isEditing ? (
+            <textarea
+              className="w-full bg-white border border-gray-200 rounded-2xl p-4 text-gray-900 leading-relaxed text-lg min-h-[150px] focus:ring-2 focus:ring-emerald-500 outline-none"
+              value={editedCompany.deliveryDetails || ''}
+              onChange={(e) => setEditedCompany({ ...editedCompany, deliveryDetails: e.target.value })}
+              placeholder="Enter special instructions here..."
+            />
+          ) : (
+            <div className="text-gray-800 leading-relaxed text-base whitespace-pre-wrap font-medium">
+              {company.deliveryDetails || "Standard delivery procedures apply. No special instructions recorded."}
+            </div>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
           <div className="bg-emerald-50/50 p-6 rounded-3xl border border-emerald-100/50">
             <div className="flex items-center space-x-3 mb-4">
@@ -252,25 +271,6 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
               </div>
             )}
           </div>
-        </div>
-
-        <div className="bg-gray-50 rounded-[2rem] p-8 border border-gray-200">
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="bg-white p-2 rounded-xl text-gray-600 shadow-sm"><Info className="w-6 h-6" /></div>
-            <h4 className="text-xl font-black text-gray-900">Delivery Instructions</h4>
-          </div>
-          {isEditing ? (
-            <textarea
-              className="w-full bg-white border border-gray-200 rounded-2xl p-4 text-gray-900 leading-relaxed text-lg min-h-[150px] focus:ring-2 focus:ring-emerald-500 outline-none"
-              value={editedCompany.deliveryDetails || ''}
-              onChange={(e) => setEditedCompany({ ...editedCompany, deliveryDetails: e.target.value })}
-              placeholder="Enter special instructions here..."
-            />
-          ) : (
-            <div className="text-gray-800 leading-relaxed text-base whitespace-pre-wrap font-medium">
-              {company.deliveryDetails || "Standard delivery procedures apply. No special instructions recorded."}
-            </div>
-          )}
         </div>
       </div>
     </div>
