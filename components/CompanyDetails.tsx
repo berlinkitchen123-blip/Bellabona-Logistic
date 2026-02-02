@@ -1,6 +1,5 @@
 
 import React, { useRef, useState } from 'react';
-// Updated layout to show full image and reordered sections
 import { Company } from '../types';
 import {
   MapPin,
@@ -69,7 +68,7 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate, initialEdit
             <img
               src={images[imgIdx]}
               alt="Location"
-              className="w-full h-auto"
+              className="w-full h-auto object-contain max-h-[80vh]"
             />
             {images.length > 1 && (
               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 flex justify-between opacity-0 group-hover:opacity-100 transition-opacity">
