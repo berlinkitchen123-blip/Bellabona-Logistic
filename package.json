@@ -1,18 +1,23 @@
 {
-  "name": "bellabona-logistic-hub",
+  "name": "bellabona-logistic",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "autoprefixer": "^10.4.20",
+    "firebase": "^11.3.0",
+    "lucide-react": "0.460.0",
+    "postcss": "^8.5.3",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "lucide-react": "0.460.0",
-    "firebase": "^12.8.0"
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

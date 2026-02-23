@@ -9,8 +9,6 @@ interface Props {
 }
 
 export const CompanyList: React.FC<Props> = ({ companies, onDelete }) => {
-  const [confirmDeleteId, setConfirmDeleteId] = React.useState<string | null>(null);
-
   if (companies.length === 0) {
     return (
       <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
@@ -26,17 +24,17 @@ export const CompanyList: React.FC<Props> = ({ companies, onDelete }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {companies.map((company) => (
-        <div
-          key={company.id}
+        <div 
+          key={company.id} 
           className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow group flex items-start justify-between"
         >
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
+            <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
               {company.name}
             </h3>
-
+            
             <div className="flex items-center space-x-2 mt-2 text-gray-500">
-              <MapPin className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <MapPin className="w-4 h-4 text-blue-500 flex-shrink-0" />
               <span className="text-sm leading-tight">{company.address}</span>
             </div>
 
@@ -49,34 +47,18 @@ export const CompanyList: React.FC<Props> = ({ companies, onDelete }) => {
 
             {company.assignedTour && (
               <div className="mt-4 flex items-center space-x-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-1 rounded-md">
-                  Tour: {company.assignedTour}
-                </span>
+                 <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-1 rounded-md">
+                   Tour: {company.assignedTour}
+                 </span>
               </div>
             )}
           </div>
 
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              if (confirmDeleteId === company.id) {
-                onDelete(company.id);
-                setConfirmDeleteId(null);
-              } else {
-                setConfirmDeleteId(company.id);
-              }
-            }}
-            className={`p-2 rounded-lg transition-all ${confirmDeleteId === company.id
-                ? 'bg-red-500 text-white shadow-lg'
-                : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
-              }`}
+          <button 
+            onClick={() => onDelete(company.id)}
+            className="text-gray-400 hover:text-red-500 p-2 hover:bg-red-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
           >
-            {confirmDeleteId === company.id ? (
-              <span className="text-xs font-bold px-1 animate-in fade-in">Confirm?</span>
-            ) : (
-              <Trash2 className="w-5 h-5" />
-            )}
+            <Trash2 className="w-5 h-5" />
           </button>
         </div>
       ))}

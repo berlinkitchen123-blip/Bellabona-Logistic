@@ -40,6 +40,7 @@ export const SOPStepEditor: React.FC<Props> = ({ step, onImageUpdate }) => {
               src={step.image} 
               alt={step.title} 
               className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
                <button 

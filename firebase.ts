@@ -13,9 +13,30 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+let app;
+try {
+  app = initializeApp(firebaseConfig);
+  console.log("Firebase App initialized:", firebaseConfig.projectId);
+} catch (error) {
+  console.error("Firebase App initialization failed:", error);
+}
 
-// Initialize Realtime Database and get a reference to the service.
-// We explicitly pass the databaseURL to ensure the SDK uses the correct regional endpoint.
-// This is critical for databases hosted in non-default regions like europe-west1.
-export const db = getDatabase(app, firebaseConfig.databaseURL);
+// Initialize Realtime Database
+let database;
+if (app) {
+  try {
+    const dbUrl = firebaseConfig.databaseURL;
+    console.log("Attempting to connect to Firebase RTDB at:", dbUrl);
+    
+    // Passing the URL explicitly is required for regional databases (europe-west1)
+    database = getDatabase(app, dbUrl);
+    
+    if (database) {
+      console.log("Firebase Database object created successfully.");
+    }
+  } catch (error) {
+    console.error("Firebase Database initialization failed:", error);
+  }
+}
+
+export const db = database;

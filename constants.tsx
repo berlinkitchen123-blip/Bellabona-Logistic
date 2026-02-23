@@ -1,186 +1,136 @@
+
 import { SOPStep } from './types';
 
 export const INITIAL_SOP_STEPS: SOPStep[] = [
   {
     id: 1,
-    title: "1. Morning Routine (8:30 AM)",
+    title: "Tour & OMS Preparation",
+    image: "https://picsum.photos/seed/logi1/800/600",
     points: [
-      "Wait for the 8:30 AM order cutoff time.",
-      "CRITICAL: Refresh the browser page once after 8:30 AM to load the latest data.",
-      "Ensure your tablet is charged and connected to Wi-Fi.",
-    ],
-    image: "sop-images/oms_search_new.png"
+      "Check which tour is assigned to you (shown at the bottom of every tour).",
+      "Open OMS → Dispatcher section.",
+      "Search the assigned company.",
+      "Refresh OMS compulsorily at 8:30 AM."
+    ]
   },
   {
     id: 2,
-    title: "2. Identify Assignments",
+    title: "Order Type Handling (Regular + Catering)",
+    image: "https://picsum.photos/seed/logi2/800/600",
     points: [
-      "Check the Weekly Tour Plan sheet.",
-      "Driver (Top Row): Person driving the vehicle.",
-      "Packator (Bottom Row): You! (Dispatcher packing the tour).",
-      "Assignments: List of companies in the column between the Driver and Packator."
-    ],
-    image: "sop-images/oms_assignments.png"
+      "If a company has both regular and catering orders, they must be packed together.",
+      "Regular and catering orders from the same company are NOT treated as separate companies for packing.",
+      "Example: Omio and Omio-Catering orders must be packed in the same Omio hot and cold boxes."
+    ]
   },
   {
     id: 3,
-    title: "3. Locate Branch in OMS",
+    title: "Sticker Rules",
+    image: "https://picsum.photos/seed/logi3/800/600",
     points: [
-      "Go to the 'Dispatcher' tab in the OMS.",
-      "Check the date (top right) is correct.",
-      "Use the search bar to find your assigned company.",
-    ],
-    image: "sop-images/oms_search_new.png"
+      "Minimum 2 hand-written stickers required per company.",
+      "If hot and cold boxes are separate, stickers must be applied on both boxes.",
+      "If all dishes are packed in one box, all stickers must be applied on that box.",
+      "No box is allowed to leave the dispatch area without a sticker."
+    ]
   },
   {
     id: 4,
-    title: "4. Preparation & Scanner Setup",
+    title: "ProGlove Connection",
+    image: "https://picsum.photos/seed/logi4/800/600",
     points: [
-      "Collect empty boxes from the store based on order size.",
-      "Apply labels to the boxes.",
-      "Open 'Inside Mobile' app on your tablet.",
-      "Action: Click 'SCAN2PAIR' to show the pairing QR Code.",
-      "Scan this QR code with your ProGlove scanner to connect."
-    ],
-    image: "sop-images/proglove_scan2pair.png"
+      "Open Insider Mobile App on the tablet.",
+      "Scan the QR code to connect ProGlove with the tablet.",
+      "Ensure connection is successful before scanning."
+    ]
   },
   {
     id: 5,
-    title: "5. Start Scanning & Cold Box",
+    title: "Packing Decision Rules",
+    image: "https://picsum.photos/seed/logi5/800/600",
     points: [
-      "Click the green 'START SCANNING' button.",
-      "Prompt: 'Scan Box' -> Scan the QR code on the Cold Box label.",
-      "Fetch Cold dishes (Salads/Desserts) as indicated by the Red Box counter.",
-      "Green Box = Scanned Quantity. Red Box = Remaining Quantity."
-    ],
-    image: "sop-images/oms_cold_box.png"
+      "Check total number of dishes ordered.",
+      "If 10–12 dishes, pack all dishes in one box.",
+      "If hot dishes are 6 or more, place a red plate at the bottom.",
+      "Red plate is mandatory for all hot dishes."
+    ]
   },
   {
     id: 6,
-    title: "6. Cold Box Packing Rules",
+    title: "Scanning Process – Cold Dishes",
+    image: "https://picsum.photos/seed/logi6/800/600",
     points: [
-      "Pack all Cold Addons (Salads, Desserts, Drinks) in the Cold Box.",
-      "Never put Hot dishes in the Cold Box.",
-      "Close the box once the Green count matches the Total."
-    ],
-    image: "sop-images/oms_cold_dish.png"
+      "Click Start Scanning.",
+      "Scan Box QR Code (mandatory).",
+      "Scan Cold Dish Letter QR Code.",
+      "Scan Bowl QR Code.",
+      "Follow on-screen instructions."
+    ]
   },
   {
     id: 7,
-    title: "7. Hot Box Transition",
+    title: "Scanning Process – Hot Dishes",
+    image: "https://picsum.photos/seed/logi7/800/600",
     points: [
-      "System will prompt for the Hot Box.",
-      "Bring the Hot Box for the same company.",
-      "Scan the QR code on the Hot Box label."
-    ],
-    image: "sop-images/oms_hot_box.png"
+      "Scan the hot box again.",
+      "Place red plate at the bottom.",
+      "Scan Hot Dish Letter QR Code.",
+      "Scan Bowl QR Code.",
+      "Ensure physical dish count matches OMS for both hot and cold dishes."
+    ]
   },
   {
     id: 8,
-    title: "8. Red Plate & Hot Dish Rules",
+    title: "Add-ons Handling",
+    image: "https://picsum.photos/seed/logi8/800/600",
     points: [
-      "Red Plate Rule: Place Red Plate at bottom of Hot Box.",
-      "Workaround: If asked to scan Red Plate, RE-SCAN the Hot Box QR code.",
-      "Scanning Order: ALWAYS scan Dish Letter QR First, then scan Bowl QR.",
-      "Hot Addons: Pack Chicken, Rice, Soup, Samosas with Hot Dish."
-    ],
-    image: "sop-images/red_plate_workaround.png"
+      "Add-ons are currently closed manually.",
+      "Add-on scanning will be implemented in the future."
+    ]
   },
   {
     id: 9,
-    title: "9. Completion",
+    title: "Storage & Segregation Rules",
+    image: "https://picsum.photos/seed/logi9/800/600",
     points: [
-      "Ensure all Red counters are at 0.",
-      "Verify physically that boxes are packed correctly."
+      "Chocolates: cold section only (always with cold dishes).",
+      "FJ Raugh: dedicated section.",
+      "Jarritos: bottom fridge.",
+      "YFood drinks: dedicated section."
     ]
   },
   {
     id: 10,
-    title: "10. Paperwork & Stickers",
+    title: "Packing Rules",
+    image: "https://picsum.photos/seed/logi10/800/600",
     points: [
-      "Paperwork: Place ALL delivery papers in ONE box (can be Hot or Cold box).",
-      "Stickers: Stick delivery stickers on the FRONT side of every box.",
-      "Rule: Every box must have AT LEAST one sticker.",
-      "Excess Stickers: If you have extra stickers (e.g., from addons), put 2-3 stickers on one box."
+      "Only Chicken, Roasted Vegetables, Rice, and Soup are allowed in hot boxes.",
+      "All other items must go into cold boxes.",
+      "If packed in one box, chocolates must be placed in one corner of the cold section.",
+      "Use a paper bag if there are many add-ons with mixed dishes.",
+      "Make sure the dish is clean, no leakage, and has the dish letter.",
+      "Do not tilt dishes. Distribution should be even."
     ]
   },
   {
     id: 11,
-    title: "11. Trolley & Packator Finish",
+    title: "Final Dispatch Actions",
+    image: "https://picsum.photos/seed/logi11/800/600",
     points: [
-      "Load all completed and labeled boxes into the Trolley.",
-      "Double check you haven't left any boxes behind.",
-      "Proceed to your next assigned company in the Tour Plan."
+      "After completing dispatch, collect all papers and QR stickers.",
+      "Place all papers for the company in any one box.",
+      "Apply stickers correctly as per packing configuration."
     ]
   },
   {
     id: 12,
-    title: "12. Tiramizoo: Start Tour",
+    title: "Final OMS Verification",
+    image: "https://picsum.photos/seed/logi12/800/600",
     points: [
-      "Open Tiramizoo App & Login.",
-      "Condition Check: You will see 'Do you meet these conditions?'.",
-      "Action: Click 'Confirm'."
-    ],
-    image: "sop-images/tiramizoo_conditions.png"
-  },
-  {
-    id: 13,
-    title: "13. Tiramizoo: Dashboard",
-    points: [
-      "View Dashboard: Top item is the Kitchen (Pickup Point).",
-      "First Stop: Friedrich-Engels-Straße 24 (or similar).",
-      "Verify '12 min' service time is visible.",
-      "Action: Click on the first stop to begin loop."
-    ],
-    image: "sop-images/tiramizoo_dashboard.png"
-  },
-  {
-    id: 14,
-    title: "14. Tiramizoo: Scan Box",
-    points: [
-      "You will see the list of companies to collect (e.g., Jameda, Digital Charging).",
-      "Action: Click the 'Scan' button (scanner icon) to open camera.",
-      "Scan the QR codes of YOUR assigned driving companies.",
-      "Green Check: Box is successfully scanned."
-    ],
-    image: "sop-images/tiramizoo_scanner.png"
-  },
-  {
-    id: 15,
-    title: "15. Tiramizoo: Finish Loading",
-    points: [
-      "Verify all companies have Green Checks or correct box counts (e.g. 3|3).",
-      "Scroll to bottom.",
-      "Action: Click 'Finish' to complete the Pickup phase."
-    ],
-    image: "sop-images/tiramizoo_finish.png"
-  },
-  {
-    id: 16,
-    title: "16. Departure & Navigation",
-    points: [
-      "Time Selection: Select '12 min' (Loading Time) and Submit.",
-      "Route: Click 'Navigate' on the next stop to start driving."
-    ]
-  },
-  {
-    id: 17,
-    title: "17. Delivery & Proof",
-    points: [
-      "Navigate to stop. Check app/box for entry codes.",
-      "Drop-off: Place boxes at the required spot.",
-      "App Action: Select ALL delivered boxes -> Choose 'Delivered on reception'.",
-      "Time: Select '6 minute'.",
-      "Photo: Click Camera Icon -> Take photo of boxes -> Submit."
-    ]
-  },
-  {
-    id: 18,
-    title: "18. Return Data",
-    points: [
-      "Collect empty boxes from the company if available.",
-      "Record the count of collected boxes for each company.",
-      "Report: Give the final counts to the Manager at the end of the tour."
+      "Refresh OMS.",
+      "Verify all companies.",
+      "Confirm all dishes are scanned and assigned to correct boxes.",
+      "Dispatch is complete only after OMS and physical packing fully match."
     ]
   }
 ];

@@ -7,7 +7,8 @@ import {
   CheckCircle2, 
   HelpCircle,
   AlertTriangle,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Loader2
 } from 'lucide-react';
 
 interface Props {
@@ -16,6 +17,17 @@ interface Props {
 
 export const TrainingGuide: React.FC<Props> = ({ steps }) => {
   const [currentStepIdx, setCurrentStepIdx] = useState(0);
+
+  if (!steps || steps.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-3xl shadow-sm border border-gray-100">
+        <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
+        <h3 className="text-lg font-bold text-gray-900">Loading SOP Steps...</h3>
+        <p className="text-sm text-gray-500 mt-2">Please wait while we fetch the training guide.</p>
+      </div>
+    );
+  }
+
   const currentStep = steps[currentStepIdx];
 
   const handleNext = () => {
@@ -58,6 +70,7 @@ export const TrainingGuide: React.FC<Props> = ({ steps }) => {
               src={currentStep.image} 
               alt={currentStep.title} 
               className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-50 p-8 text-center">
@@ -104,36 +117,37 @@ export const TrainingGuide: React.FC<Props> = ({ steps }) => {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-lg px-4 flex items-center space-x-3 z-50">
+      <div className="fixed bottom-24 md:bottom-8 left-1/2 -translate-x-1/2 w-full max-w-lg px-4 flex items-center space-x-3 z-40">
         <button 
           onClick={handlePrev}
           disabled={currentStepIdx === 0}
-          className={`h-14 w-14 flex items-center justify-center rounded-2xl shadow-lg transition-all ${
+          className={`h-14 w-14 flex items-center justify-center rounded-2xl shadow-2xl border border-gray-100 transition-all ${
             currentStepIdx === 0 
-              ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+              ? 'bg-gray-100 text-gray-300 cursor-not-allowed' 
               : 'bg-white text-gray-700 hover:bg-gray-50 active:scale-95'
           }`}
+          title="Previous Step"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         
         <button 
           onClick={handleNext}
-          className={`flex-1 h-14 flex items-center justify-center rounded-2xl font-bold text-lg shadow-lg transition-all active:scale-95 ${
+          className={`flex-1 h-14 flex items-center justify-center rounded-2xl font-black text-lg shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all active:scale-95 ${
             currentStepIdx === steps.length - 1
-              ? 'bg-green-600 text-white hover:bg-green-700'
+              ? 'bg-green-600 text-white hover:bg-green-700 shadow-[0_20px_50px_rgba(22,163,74,0.3)]'
               : 'bg-blue-600 text-white hover:bg-blue-700'
           }`}
         >
           {currentStepIdx === steps.length - 1 ? (
             <span className="flex items-center space-x-2">
-              <CheckCircle2 className="w-5 h-5" />
+              <CheckCircle2 className="w-6 h-6" />
               <span>Finish Training</span>
             </span>
           ) : (
             <span className="flex items-center space-x-2">
               <span>Next Step</span>
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-6 h-6" />
             </span>
           )}
         </button>
