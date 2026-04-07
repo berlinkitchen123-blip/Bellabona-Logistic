@@ -379,7 +379,7 @@ const AppContent: React.FC = () => {
             <div className="bg-blue-600 p-2 rounded-xl shadow-md">
               <Truck className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-xl font-black text-gray-900 tracking-tight hidden sm:block">LogiTrain</h1>
+            <h1 className="text-xl font-black text-gray-900 tracking-tight hidden sm:block">BELLABONA</h1>
           </div>
           
           <nav className="hidden md:flex items-center space-x-1">
