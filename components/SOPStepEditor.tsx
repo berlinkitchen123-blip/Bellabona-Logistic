@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react';
 import { SOPStep } from '../types';
-import { Camera, Upload, Trash2 } from 'lucide-react';
+import { Camera, Upload, Trash2, ClipboardPaste } from 'lucide-react';
 import { StorageImage } from './StorageImage';
 
 interface Props {
@@ -26,6 +26,52 @@ export const SOPStepEditor: React.FC<Props> = ({ step, onImageUpdate }) => {
     reader.readAsDataURL(file);
   };
 
+  const handlePasteButton = async () => {
+    try {
+      const clipboardItems = await navigator.clipboard.read();
+      for (const clipboardItem of clipboardItems) {
+        const imageTypes = clipboardItem.types.filter(type => type.startsWith('image/'));
+        for (const imageType of imageTypes) {
+          const blob = await clipboardItem.getType(imageType);
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const result = event.target?.result;
+            if (typeof result === 'string') {
+              onImageUpdate(result);
+            }
+          };
+          reader.readAsDataURL(blob);
+          return;
+        }
+      }
+      alert("No image found in clipboard. Please copy an image first.");
+    } catch (err) {
+      console.error("Failed to read clipboard contents: ", err);
+      alert("Unable to read clipboard. Please make sure you have granted permission, or use the upload button.");
+    }
+  };
+
+  const handlePasteEvent = (e: React.ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') !== -1) {
+        const file = items[i].getAsFile();
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const result = event.target?.result;
+            if (typeof result === 'string') {
+              onImageUpdate(result);
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+        break;
+      }
+    }
+  };
+
   const getDisplayImage = (img: string | undefined): string | undefined => {
     if (!img || typeof img !== 'string') return undefined;
     const trimmed = img.trim();
@@ -40,7 +86,11 @@ export const SOPStepEditor: React.FC<Props> = ({ step, onImageUpdate }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
+    <div 
+      className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group focus-within:ring-2 focus-within:ring-blue-500 outline-none"
+      tabIndex={0}
+      onPaste={handlePasteEvent}
+    >
       <div className="p-4 border-b border-gray-50 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
@@ -62,32 +112,54 @@ export const SOPStepEditor: React.FC<Props> = ({ step, onImageUpdate }) => {
                <button 
                   onClick={() => fileRef.current?.click()}
                   className="bg-white p-2 rounded-full shadow-lg text-blue-600 hover:bg-blue-50 transition-colors"
+                  title="Upload Image"
                >
                   <Upload className="w-5 h-5" />
                </button>
                <button 
+                  onClick={handlePasteButton}
+                  className="bg-white p-2 rounded-full shadow-lg text-indigo-600 hover:bg-indigo-50 transition-colors"
+                  title="Paste from Clipboard"
+               >
+                  <ClipboardPaste className="w-5 h-5" />
+               </button>
+               <button 
                   onClick={() => onImageUpdate('')}
                   className="bg-white p-2 rounded-full shadow-lg text-red-600 hover:bg-red-50 transition-colors"
+                  title="Remove Image"
                >
                   <Trash2 className="w-5 h-5" />
                </button>
             </div>
           </>
         ) : (
-          <button 
-            onClick={() => fileRef.current?.click()}
-            className="w-full h-full flex flex-col items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors p-4"
-          >
+          <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 p-4">
             <Camera className="w-10 h-10 mb-2 opacity-20" />
-            <span className="text-sm font-medium">Add Training Photo</span>
+            <span className="text-sm font-medium mb-4">Add Training Photo</span>
+            <div className="flex space-x-3">
+              <button 
+                onClick={() => fileRef.current?.click()}
+                className="bg-white border border-gray-200 px-4 py-2 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 shadow-sm flex items-center space-x-2"
+              >
+                <Upload className="w-4 h-4" />
+                <span>Upload</span>
+              </button>
+              <button 
+                onClick={handlePasteButton}
+                className="bg-white border border-gray-200 px-4 py-2 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 shadow-sm flex items-center space-x-2"
+              >
+                <ClipboardPaste className="w-4 h-4" />
+                <span>Paste</span>
+              </button>
+            </div>
             {step.image && (
-              <div className="text-[10px] text-red-500 mt-2 p-2 bg-red-50 rounded w-full text-left overflow-hidden">
+              <div className="text-[10px] text-red-500 mt-4 p-2 bg-red-50 rounded w-full text-left overflow-hidden">
                 <strong>Invalid format:</strong><br/>
                 Type: {typeof step.image}<br/>
                 Value: {typeof step.image === 'object' ? JSON.stringify(step.image).substring(0, 100) : String(step.image).substring(0, 100)}...
               </div>
             )}
-          </button>
+          </div>
         )}
         <input 
           type="file" 
