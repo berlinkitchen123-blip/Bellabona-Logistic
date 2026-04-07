@@ -15,6 +15,7 @@ import {
   // Added missing Truck icon to fix error on line 119
   Truck
 } from 'lucide-react';
+import { TranslatedText } from './TranslatedText';
 
 interface Props {
   company: Company;
@@ -153,9 +154,10 @@ export const CompanyDetails: React.FC<Props> = ({ company, onUpdate }) => {
              <div className="bg-amber-100 p-2 rounded-lg md:rounded-xl text-amber-600"><Info className="w-5 h-5 md:w-6 md:h-6" /></div>
              <h4 className="text-lg md:text-xl font-black text-amber-900">Delivery Instructions</h4>
           </div>
-          <div className="text-amber-800 leading-relaxed text-base md:text-lg whitespace-pre-wrap font-medium">
-            {company.deliveryDetails || "Standard delivery procedures apply. No special instructions recorded."}
-          </div>
+          <TranslatedText 
+            text={company.deliveryDetails || "Standard delivery procedures apply. No special instructions recorded."}
+            className="text-amber-800 leading-relaxed text-base md:text-lg whitespace-pre-wrap font-medium"
+          />
         </div>
       </div>
     </div>

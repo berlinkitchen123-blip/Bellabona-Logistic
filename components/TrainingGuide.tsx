@@ -10,6 +10,8 @@ import {
   Image as ImageIcon,
   Loader2
 } from 'lucide-react';
+import { StorageImage } from './StorageImage';
+import { TranslatedText } from './TranslatedText';
 
 interface Props {
   steps: SOPStep[];
@@ -29,6 +31,25 @@ export const TrainingGuide: React.FC<Props> = ({ steps }) => {
   }
 
   const currentStep = steps[currentStepIdx];
+  
+  const getDisplayImage = (img: string | undefined): string | undefined => {
+    if (!img || typeof img !== 'string') return undefined;
+    const trimmed = img.trim();
+    if (trimmed.startsWith('data:') || trimmed.startsWith('http')) return trimmed;
+    if (trimmed.length > 200 && !trimmed.includes('/')) return `data:image/png;base64,${trimmed}`;
+    return trimmed;
+  };
+
+  const isValidImage = (img: string | undefined): boolean => {
+    const display = getDisplayImage(img);
+    return !!display;
+  };
+
+  if (isValidImage(currentStep.image)) {
+    console.log(`Rendering image for step ${currentStep.id}:`, getDisplayImage(currentStep.image)?.substring(0, 50) + '...');
+  } else {
+    console.warn(`No valid image found for step ${currentStep.id}`);
+  }
 
   const handleNext = () => {
     if (currentStepIdx < steps.length - 1) {
@@ -65,12 +86,11 @@ export const TrainingGuide: React.FC<Props> = ({ steps }) => {
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
         {/* Step Image */}
         <div className="h-64 md:h-80 bg-gray-100 relative">
-          {currentStep.image ? (
-            <img 
-              src={currentStep.image} 
+          {isValidImage(currentStep.image) ? (
+            <StorageImage 
+              path={currentStep.image!} 
               alt={currentStep.title} 
               className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-50 p-8 text-center">
@@ -88,19 +108,21 @@ export const TrainingGuide: React.FC<Props> = ({ steps }) => {
 
         {/* Content */}
         <div className="p-6 md:p-8">
-          <h2 className="text-2xl font-black text-gray-900 mb-6 leading-tight">
-            {currentStep.title}
-          </h2>
+          <TranslatedText 
+            text={currentStep.title}
+            className="text-2xl font-black text-gray-900 mb-6 leading-tight"
+          />
 
           <div className="space-y-4">
-            {currentStep.points.map((point, idx) => (
+            {(currentStep.points || []).map((point, idx) => (
               <div key={idx} className="flex items-start space-x-4 group">
                 <div className="mt-1 bg-green-50 text-green-600 p-1 rounded-full group-hover:bg-green-100 transition-colors">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
-                <p className="text-gray-700 leading-relaxed font-medium">
-                  {point}
-                </p>
+                <TranslatedText 
+                  text={point}
+                  className="text-gray-700 leading-relaxed font-medium"
+                />
               </div>
             ))}
           </div>
