@@ -25,7 +25,8 @@ import { ref, onValue, set } from "firebase/database";
 import { db, DB_URL } from './firebase';
 import { AppView, Company, SOPStep } from './types';
 import { INITIAL_SOP_STEPS } from './constants';
-import { LanguageProvider, useLanguage } from './components/LanguageContext';
+import { LanguageProvider, useLanguage, LanguageSwitcher } from './components/LanguageContext';
+import { TranslatedText } from './components/TranslatedText';
 import { CompanyList } from './components/CompanyList';
 import { CompanyImporter } from './components/CompanyImporter';
 import { TrainingGuide } from './components/TrainingGuide';
@@ -37,25 +38,6 @@ const ChevronRight: React.FC<{ className?: string }> = ({ className }) => (
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
   </svg>
 );
-
-const LanguageSwitcher = () => {
-  const { language, setLanguage } = useLanguage();
-  return (
-    <div className="flex items-center space-x-1 bg-gray-100 rounded-lg px-2 py-1">
-      <select 
-        value={language} 
-        onChange={(e) => setLanguage(e.target.value as any)}
-        className="bg-transparent text-xs font-bold text-gray-700 outline-none cursor-pointer appearance-none pr-2"
-      >
-        <option value="auto">Auto Lang</option>
-        <option value="en">English</option>
-        <option value="de">Deutsch</option>
-        <option value="tr">Türkçe</option>
-        <option value="ar">العربية</option>
-      </select>
-    </div>
-  );
-};
 
 const AppContent: React.FC = () => {
   const [activeView, setActiveView] = useState<AppView>('dashboard');
@@ -287,7 +269,7 @@ const AppContent: React.FC = () => {
       }`}
     >
       {icon}
-      <span className="font-medium">{label}</span>
+      <TranslatedText text={label} className="font-medium" />
     </button>
   );
 

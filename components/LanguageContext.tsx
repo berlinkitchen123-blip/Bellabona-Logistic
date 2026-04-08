@@ -32,4 +32,23 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
+export const LanguageSwitcher = () => {
+  const { language, setLanguage } = useLanguage();
+  return (
+    <div className="flex items-center space-x-1 bg-gray-100 rounded-lg px-2 py-1">
+      <select 
+        value={language} 
+        onChange={(e) => setLanguage(e.target.value as any)}
+        className="bg-transparent text-xs font-bold text-gray-700 outline-none cursor-pointer appearance-none pr-2"
+      >
+        <option value="auto">Auto Lang</option>
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="tr">Türkçe</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+  );
+};
+
 export const useLanguage = () => useContext(LanguageContext);

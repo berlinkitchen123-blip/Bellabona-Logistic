@@ -8,7 +8,10 @@ import {
   HelpCircle,
   AlertTriangle,
   Image as ImageIcon,
-  Loader2
+  Loader2,
+  Edit2,
+  Save,
+  X
 } from 'lucide-react';
 import { StorageImage } from './StorageImage';
 import { TranslatedText } from './TranslatedText';
@@ -19,6 +22,18 @@ interface Props {
 
 export const TrainingGuide: React.FC<Props> = ({ steps }) => {
   const [currentStepIdx, setCurrentStepIdx] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState<SOPStep[]>(steps);
+
+  const handleSave = () => {
+    // Note: You'll need to pass an onUpdate function from App.tsx to save changes
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditForm(steps);
+    setIsEditing(false);
+  };
 
   if (!steps || steps.length === 0) {
     return (
@@ -54,8 +69,10 @@ export const TrainingGuide: React.FC<Props> = ({ steps }) => {
   const handleNext = () => {
     if (currentStepIdx < steps.length - 1) {
       setCurrentStepIdx(currentStepIdx + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setCurrentStepIdx(0); // Finish SOP: Reset to first step
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePrev = () => {
@@ -99,35 +116,74 @@ export const TrainingGuide: React.FC<Props> = ({ steps }) => {
               <p className="text-xs mt-1">Contact dispatch manager to upload a training photo.</p>
             </div>
           )}
-          <div className="absolute top-4 left-4">
+          <div className="absolute top-4 left-4 flex items-center space-x-2">
              <div className="bg-blue-600 text-white w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg ring-4 ring-white">
                 {currentStep.id}
              </div>
+             <button 
+               onClick={() => setIsEditing(!isEditing)}
+               className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg ring-4 ring-white transition-colors ${isEditing ? 'bg-amber-500 text-white' : 'bg-white text-gray-700'}`}
+             >
+               {isEditing ? <X className="w-5 h-5" /> : <Edit2 className="w-5 h-5" />}
+             </button>
           </div>
         </div>
 
         {/* Content */}
         <div className="p-6 md:p-8">
-          <TranslatedText 
-            text={currentStep.title}
-            className="text-2xl font-black text-gray-900 mb-6 leading-tight"
-          />
+          {isEditing ? (
+            <div className="space-y-4">
+              <input 
+                type="text"
+                value={editForm[currentStepIdx].title}
+                onChange={(e) => {
+                  const newForm = [...editForm];
+                  newForm[currentStepIdx].title = e.target.value;
+                  setEditForm(newForm);
+                }}
+                className="w-full text-2xl font-black text-gray-900 leading-tight p-2 border-b-2 border-blue-500 outline-none"
+              />
+              <textarea
+                value={editForm[currentStepIdx].points?.join('\n')}
+                onChange={(e) => {
+                  const newForm = [...editForm];
+                  newForm[currentStepIdx].points = e.target.value.split('\n');
+                  setEditForm(newForm);
+                }}
+                className="w-full text-gray-700 leading-relaxed font-medium p-2 border border-gray-200 rounded-xl outline-none"
+                rows={5}
+              />
+              <button 
+                onClick={handleSave}
+                className="w-full bg-blue-600 text-white py-3 rounded-2xl font-bold hover:bg-blue-700 shadow-lg"
+              >
+                Save Changes
+              </button>
+            </div>
+          ) : (
+            <>
+              <TranslatedText 
+                text={currentStep.title}
+                className="text-2xl font-black text-gray-900 mb-6 leading-tight"
+              />
 
-          <div className="space-y-4">
-            {(currentStep.points || []).map((point, idx) => (
-              <div key={idx} className="flex items-start space-x-4 group">
-                <div className="mt-1 bg-green-50 text-green-600 p-1 rounded-full group-hover:bg-green-100 transition-colors">
-                  <CheckCircle2 className="w-5 h-5" />
-                </div>
-                <TranslatedText 
-                  text={point}
-                  className="text-gray-700 leading-relaxed font-medium"
-                />
+              <div className="space-y-4">
+                {(currentStep.points || []).map((point, idx) => (
+                  <div key={idx} className="flex items-start space-x-4 group">
+                    <div className="mt-1 bg-green-50 text-green-600 p-1 rounded-full group-hover:bg-green-100 transition-colors">
+                      <CheckCircle2 className="w-5 h-5" />
+                    </div>
+                    <TranslatedText 
+                      text={point}
+                      className="text-gray-700 leading-relaxed font-medium"
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
 
-          {currentStep.id === 12 && (
+          {currentStep.id === 12 && !isEditing && (
             <div className="mt-8 bg-amber-50 border border-amber-100 rounded-2xl p-4 flex items-start space-x-3">
               <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-amber-800 font-medium italic">
